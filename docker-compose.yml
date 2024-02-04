@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: my_postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: wallet_db
+      POSTGRES_USER: patrik
+      POSTGRES_PASSWORD: super_secret_password
+
+  wallet-app:
+    image: patrik_melander_wallet:latest
+    container_name: wallet_application
+    ports:
+      - "8080:8080"
+    environment:
+      - POSTGRES_USER=patrik
+      - POSTGRES_PASSWORD=super_secret_password
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/wallet_db
+      - SPRING_DATASOURCE_USERNAME=patrik
+      - SPRING_DATASOURCE_PASSWORD=super_secret_password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_PROFILES_ACTIVE=prod
+    depends_on:
+      - postgres
