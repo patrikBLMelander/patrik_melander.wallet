@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/wallet_db
+    username: patrik
+    password: super_secret_password
+  jpa:
+    hibernate:
+      ddl-auto: update
